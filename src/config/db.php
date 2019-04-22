@@ -1,8 +1,8 @@
 <?php
     class db{
         private $dbHost = 'localhost';
-        private $dbUser = 'root';
-        private $dbPass = '';
+        private $dbUser = 'Confetti';
+        private $dbPass = 'tech_2019';
         private $dbName = 'mydb';
 
         public function conDB(){
