@@ -3,7 +3,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 
 $app->get('/api/emision', function (Request $request, Response $response) {
-    $sql = "SELECT * FROM emision";
+    $sql = "SELECT fecha, hora FROM emision ORDER BY idEmision DESC LIMIT 1";
     try {
         $db = new db();
         $db = $db->conDB();
