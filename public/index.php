@@ -7,8 +7,9 @@ require '../src/config/db.php';
 
 $app = new \Slim\App;
     
+require '../src/rutas/preguntas.php';
 require '../src/rutas/usuario.php';
-require '../src/rutas/emision.php';
+//require '../src/rutas/emision.php';
 
 $app->run();
 
