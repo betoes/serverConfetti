@@ -47,9 +47,8 @@ $app->post('/api/usuario/login', function (Request $request, Response $response,
         $resultado->bindParam(':clave', $clave);
         $resultado->execute();
         if ($resultado->rowCount() > 0) {
-            
-            $us = $resultado->fetch(PDO::FETCH_ASSOC)['autenticado'];
 
+            $us = $resultado->fetch(PDO::FETCH_ASSOC)['autenticado'];
             return $response->withJson($us, 200);
             
             
@@ -160,13 +159,13 @@ $app->get('/api/usuario/{parametro}', function (Request $request, Response $resp
 });
 
 $app->post('/api/usuario/nuevo', function (Request $request, Response $response, array $args) {
-    $random_number = mt_rand(1, 9);
+    /*$random_number = mt_rand(1, 9);
     for ($i = 0; $i < 2; $i++) {
         $random_number .= mt_rand(0, 9);
-    }
+    }*/
     
     
-    $pin = "$random_number";
+    $pin = 123;
     $nombre = $request->getParam('nombre');
     $apellido = $request->getParam('apellido');
     $clave = $request->getParam('clave');
@@ -190,7 +189,6 @@ $app->post('/api/usuario/nuevo', function (Request $request, Response $response,
         $resultadoUsuario = $db->prepare($sqlSelectUsuario);
         $resultadoUsuario->bindParam(':usuario', $usuario);
         $resultadoUsuario->execute();
-
         //Se revisa si el usuario ya está registrado en la BD
         if ($resultadoUsuario->rowCount() > 0) {
 
@@ -199,7 +197,7 @@ $app->post('/api/usuario/nuevo', function (Request $request, Response $response,
             $resultadoCorreo = $db->prepare($sqlSelectCorreo);
             $resultadoCorreo->bindParam(':correo', $correo);
             $resultadoCorreo->execute();
-
+            
             //Se revisa que el correo no este en uso
             if ($resultadoCorreo->rowCount() > 0) {
                 return $response->withJson('El correo ya está registrado', 404);
@@ -215,18 +213,13 @@ $app->post('/api/usuario/nuevo', function (Request $request, Response $response,
                     //enviarSMS($telefono, $pin);
                     $resultadoInsert = $db->prepare($sqlInsert);
                     $resultadoInsert->bindParam(':nombre', $nombre);
-                    
                     $resultadoInsert->bindParam(':apellido', $apellido);
-                    
                     $resultadoInsert->bindParam(':clave', $clave);
-                    
                     $resultadoInsert->bindParam(':correo', $correo);
-                    
                     $resultadoInsert->bindParam(':usuario', $usuario);
                     $resultadoInsert->bindParam(':telefono', $telefono);
-                    
                     $resultadoInsert->bindParam(':pin', $pin);
-                    return $response->withJson('Prueba de petición', 301);
+                    
                     $resultadoInsert->execute();
                     return $response->withStatus(201);
 
